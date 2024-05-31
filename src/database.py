@@ -1,11 +1,11 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
-from sqlalchemy.ext.declarative import declarative_base, as_declarative, declared_attr
+from sqlalchemy import create_engine, Column, Integer, DateTime, func
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
 DATABASE_URL = 'postgresql+psycopg2://postgres:Lucas123@127.0.0.1:5430/salead'
 
-engine = create_engine(DATABASE_URL, connect_args={'check_same_thread': False})
+engine = create_engine(DATABASE_URL, connect_args={})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -28,11 +28,8 @@ class Base:
 
     @classmethod
     def query_active(cls, session):
-        return session.query(cls).filter(cls.deleted_at == None)
+        return session.query(cls).filter(cls.deleted_at.is_(None))
 
     @classmethod
     def query_all(cls, session):
         return session.query(cls)
-
-
-Base = declarative_base()

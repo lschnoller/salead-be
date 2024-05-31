@@ -36,4 +36,4 @@ class Contact(Base):
     company = relationship("Company", back_populates="contacts")  # 1-to-many relationship between Company and Contact
 
 
-Company.contacts = relationship("Contact", order_by=Contact.position, back_populates="companies")  # reverse: many-to-1 relationship between Contact and Company
+Company.contacts = relationship("Contact", order_by=Contact.position, back_populates="company")  # reverse: many-to-1 relationship between Contact and Company

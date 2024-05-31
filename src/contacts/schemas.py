@@ -24,7 +24,7 @@ class CompanyInDBBase(CompanyBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Company(CompanyInDBBase):
@@ -58,7 +58,7 @@ class ContactInDBBase(ContactBase):
     company: Company
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Contact(ContactInDBBase):
