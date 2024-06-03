@@ -1,12 +1,13 @@
-from sqlalchemy import create_engine, Column, Integer, DateTime, func
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy import Column, Integer, DateTime, func
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-DATABASE_URL = 'postgresql+psycopg2://postgres:Lucas123@127.0.0.1:5430/salead'
+DATABASE_URL = 'postgresql+asyncpg://postgres:Lucas123@127.0.0.1:5430/salead'
 
-engine = create_engine(DATABASE_URL, connect_args={})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_async_engine(DATABASE_URL)
+AsyncSessionLocal = sessionmaker(bind=engine, _class=AsyncSession, expire_on_commit=False)
 
 
 @as_declarative()
@@ -33,3 +34,8 @@ class Base:
     @classmethod
     def query_all(cls, session):
         return session.query(cls)
+
+
+async def init_models():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

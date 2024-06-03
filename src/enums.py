@@ -12,3 +12,8 @@ class Industry(str, Enum):
     ENERGY = "Energy"
     UTILITIES = "Utilities"
     REAL_ESTATE = "Real Estate"
+
+
+class Role(str, Enum):
+    MEMBER = "Member"
+    ADMIN = "Admin"

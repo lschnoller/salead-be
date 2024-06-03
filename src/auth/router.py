@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Annotated
 from datetime import timedelta
-from .service import authenticate_user, create_access_token
+from .services import authenticate_user, create_access_token
 from ..dependencies import get_db
-from .service import get_current_user
+from .services import get_current_user
 from ..accounts.schemas import User
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 14400

@@ -1,8 +1,8 @@
-from .database import SessionLocal
+from .database import AsyncSessionLocal
 
 
 def get_db():
-    db = SessionLocal()
+    db = AsyncSessionLocal()
     try:
         yield db
     finally:

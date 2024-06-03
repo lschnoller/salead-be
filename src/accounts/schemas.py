@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr, conint, Field
+from ..enums import Role
 
 
 class AccountBase(BaseModel):
@@ -25,30 +26,6 @@ class Account(AccountInDBBase):
     pass
 
 
-class RoleBase(BaseModel):
-    name: str
-    description: str | None = None
-
-
-class RoleCreate(RoleBase):
-    pass
-
-
-class RoleUpdate(RoleBase):
-    pass
-
-
-class RoleInDBBase(RoleBase):
-    id: int
-
-    class Config:
-        from_attributes = True
-
-
-class Role(RoleInDBBase):
-    pass
-
-
 class UserBase(BaseModel):
     account_admin: bool = False
     email: EmailStr
@@ -56,25 +33,23 @@ class UserBase(BaseModel):
     first_name: str
     last_name: str
     is_active: bool = True
+    role: Role
 
 
 class UserCreate(UserBase):
-    password: str
+    hashed_password: str
     account_id: int
-    role_id: int
 
 
 class UserUpdate(UserBase):
-    password: str | None = None
+    hashed_password: str | None = None
     account_id: int
-    role_id: int
 
 
 class UserInDBBase(UserBase):
     id: int
     hashed_password: str
     account: Account
-    role: Role
 
     class Config:
         from_attributes = True
